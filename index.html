@@ -247,10 +247,12 @@ select{font-family:'Segoe UI',sans-serif}
 <nav class="sidebar">
   <div class="sb-logo">
     <div class="sb-emblem">
-      <svg viewBox="0 0 30 34" fill="none">
-        <path d="M15 1L2 6.5V17C2 24.2 7.8 30.7 15 33C22.2 30.7 28 24.2 28 17V6.5L15 1Z" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.2"/>
-        <text x="15" y="21" text-anchor="middle" font-size="8" font-weight="800" fill="#93c5fd" font-family="Segoe UI,sans-serif">BWI</text>
-      </svg>
+      <!-- Logo Kabupaten Banyuwangi -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Seal_of_Banyuwangi_Regency.svg/240px-Seal_of_Banyuwangi_Regency.svg.png" 
+           width="42" height="42" alt="Logo Banyuwangi" 
+           style="border-radius:8px;object-fit:contain"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div style="display:none;width:42px;height:42px;background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:8px;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;text-align:center;line-height:1.2">BWI</div>
     </div>
     <div class="sb-title"><b>Pemerintah</b>Kabupaten<br>Banyuwangi</div>
   </div>
@@ -315,65 +317,225 @@ select{font-family:'Segoe UI',sans-serif}
       </div>
     </div>
     <!-- DASHBOARD (hidden until upload) -->
-    <div id="dashContent" style="display:none;flex-direction:column;gap:14px;padding:16px 20px 30px">
-      <!-- STAT CARDS -->
-      <div class="stats">
-        <div class="sc bl"><div class="sc-inner"><div class="sc-ico">👥</div><div class="sc-info"><div class="sc-lbl">Total Pasar</div><div class="sc-val" id="s-pasar">0</div></div></div><div class="sc-sub">Pasar Pantauan</div><span class="sc-link">Lihat Detail →</span></div>
-        <div class="sc cy"><div class="sc-inner"><div class="sc-ico">📦</div><div class="sc-info"><div class="sc-lbl">Total Komoditas</div><div class="sc-val" id="s-kom">0</div></div></div><div class="sc-sub">Komoditas Dipantau</div><span class="sc-link">Lihat Detail →</span></div>
-        <div class="sc pu"><div class="sc-inner"><div class="sc-ico">📊</div><div class="sc-info"><div class="sc-lbl">Rata-Rata Harga</div><div class="sc-val sm" id="s-avg">Rp 0</div></div></div><div class="sc-sub" id="s-avg-chg" style="font-size:9.5px"></div><span class="sc-link">Lihat Detail →</span></div>
-        <div class="sc gn"><div class="sc-inner"><div class="sc-ico">📈</div><div class="sc-info"><div class="sc-lbl">Komoditas Naik</div><div style="display:flex;align-items:baseline;gap:4px"><div class="sc-val" id="s-naik">0</div><span class="sc-pct" id="s-naik-pct"></span></div></div></div><div class="sc-sub" id="s-naik-sub"></div><span class="sc-link">Lihat Detail →</span></div>
-        <div class="sc rd"><div class="sc-inner"><div class="sc-ico">📉</div><div class="sc-info"><div class="sc-lbl">Komoditas Turun</div><div style="display:flex;align-items:baseline;gap:4px"><div class="sc-val" id="s-turun">0</div><span class="sc-pct" id="s-turun-pct"></span></div></div></div><div class="sc-sub" id="s-turun-sub"></div><span class="sc-link">Lihat Detail →</span></div>
-        <div class="sc ye"><div class="sc-inner"><div class="sc-ico">➡️</div><div class="sc-info"><div class="sc-lbl">Komoditas Stabil</div><div style="display:flex;align-items:baseline;gap:4px"><div class="sc-val" id="s-stabil">0</div><span class="sc-pct" id="s-stabil-pct"></span></div></div></div><div class="sc-sub" id="s-stabil-sub"></div><span class="sc-link">Lihat Detail →</span></div>
-      </div>
-      <!-- ROW 2 -->
-      <div class="r2">
-        <div class="card">
-          <div class="ch"><div class="ct" id="plist-ct">Pasar Pantauan</div></div>
-          <div class="plist" id="pasarList"></div>
+    <div id="dashContent" style="display:none;flex-direction:column;gap:12px;padding:14px 20px 30px">
+
+      <!-- ROW 1: IPH card besar + 5 stat cards -->
+      <div style="display:grid;grid-template-columns:280px 1fr 1fr 1fr 1fr 1fr;gap:10px;align-items:stretch">
+
+        <!-- IPH CARD -->
+        <div style="background:linear-gradient(135deg,#0f1f3d,#1a3560);border:1px solid rgba(56,189,248,.3);border-radius:12px;padding:16px;position:relative;overflow:hidden;min-height:120px">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;margin-bottom:4px">Indeks Perkembangan Harga (IPH)</div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;margin-bottom:8px">Hari Ini</div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                <span id="s-iph-arrow" style="font-size:20px;color:#10b981">▲</span>
+                <span id="s-iph" style="font-size:28px;font-weight:900;color:#10b981;letter-spacing:-1px;white-space:nowrap">+0,00%</span>
+                <span id="s-iph-badge" style="font-size:9px;font-weight:800;padding:2px 8px;border-radius:5px;background:rgba(16,185,129,.2);color:#10b981;margin-left:2px;white-space:nowrap">Naik</span>
+              </div>
+              <div style="font-size:9.5px;color:#475569">Dibandingkan kemarin</div>
+            </div>
+            <div style="width:90px;height:44px;flex-shrink:0"><canvas id="iphSparkline"></canvas></div>
+          </div>
         </div>
+
+        <!-- TOTAL PASAR -->
+        <div style="background:#111827;border:1px solid rgba(99,179,237,.12);border-radius:10px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2563eb,#06b6d4)"></div>
+          <div style="font-size:20px;margin-bottom:4px">🏪</div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#3b82f6;margin-bottom:2px">Total Pasar</div>
+          <div style="font-size:28px;font-weight:900;color:#f1f5f9;letter-spacing:-.5px;line-height:1" id="s-pasar">0</div>
+          <div style="font-size:9.5px;color:#475569;margin-top:2px">Pasar Pantauan</div>
+          <span style="font-size:9.5px;color:#3b82f6;margin-top:4px;cursor:pointer" onclick="gv('monitoring',null)">Lihat Detail →</span>
+        </div>
+
+        <!-- TOTAL KOMODITAS -->
+        <div style="background:#111827;border:1px solid rgba(99,179,237,.12);border-radius:10px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#06b6d4,#22d3ee)"></div>
+          <div style="font-size:20px;margin-bottom:4px">🧺</div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#06b6d4;margin-bottom:2px">Total Komoditas</div>
+          <div style="font-size:28px;font-weight:900;color:#f1f5f9;letter-spacing:-.5px;line-height:1" id="s-kom">0</div>
+          <div style="font-size:9.5px;color:#475569;margin-top:2px">Komoditas Dipantau</div>
+          <span style="font-size:9.5px;color:#06b6d4;margin-top:4px;cursor:pointer" onclick="gv('komoditas',null)">Lihat Detail →</span>
+        </div>
+
+        <!-- KOMODITAS NAIK -->
+        <div style="background:#111827;border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#059669,#34d399)"></div>
+          <div style="font-size:20px;margin-bottom:4px">📈</div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#10b981;margin-bottom:2px">Komoditas Naik</div>
+          <div style="font-size:28px;font-weight:900;color:#f1f5f9;letter-spacing:-.5px;line-height:1" id="s-naik">0</div>
+          <div style="font-size:11px;font-weight:700;color:#10b981;margin-top:2px" id="s-naik-pct"></div>
+          <div style="font-size:9.5px;color:#475569" id="s-naik-sub"></div>
+          <span style="font-size:9.5px;color:#10b981;margin-top:4px;cursor:pointer" onclick="gv('peringatan',null)">Lihat Detail →</span>
+        </div>
+
+        <!-- KOMODITAS TURUN -->
+        <div style="background:#111827;border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#dc2626,#f87171)"></div>
+          <div style="font-size:20px;margin-bottom:4px">📉</div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#ef4444;margin-bottom:2px">Komoditas Turun</div>
+          <div style="font-size:28px;font-weight:900;color:#f1f5f9;letter-spacing:-.5px;line-height:1" id="s-turun">0</div>
+          <div style="font-size:11px;font-weight:700;color:#ef4444;margin-top:2px" id="s-turun-pct"></div>
+          <div style="font-size:9.5px;color:#475569" id="s-turun-sub"></div>
+          <span style="font-size:9.5px;color:#ef4444;margin-top:4px;cursor:pointer" onclick="gv('peringatan',null)">Lihat Detail →</span>
+        </div>
+
+        <!-- KOMODITAS STABIL -->
+        <div style="background:#111827;border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#d97706,#fbbf24)"></div>
+          <div style="font-size:20px;margin-bottom:4px">➡️</div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#f59e0b;margin-bottom:2px">Komoditas Stabil</div>
+          <div style="font-size:28px;font-weight:900;color:#f1f5f9;letter-spacing:-.5px;line-height:1" id="s-stabil">0</div>
+          <div style="font-size:11px;font-weight:700;color:#f59e0b;margin-top:2px" id="s-stabil-pct"></div>
+          <div style="font-size:9.5px;color:#475569" id="s-stabil-sub"></div>
+          <span style="font-size:9.5px;color:#f59e0b;margin-top:4px;cursor:pointer" onclick="gv('komoditas',null)">Lihat Detail →</span>
+        </div>
+      </div>
+
+      <!-- ROW 2: Tren IPH | Donut | Top Naik | Top Turun -->
+      <div style="display:grid;grid-template-columns:1fr 220px 1fr 1fr;gap:10px">
+
+        <!-- TREN IPH -->
         <div class="card">
           <div class="ch">
-            <div class="ct">Trend Rata-Rata Harga (Semua Komoditas)</div>
-            <select id="trendRange" onchange="renderTrend()" style="background:#0d1526;color:#38bdf8;border:1px solid rgba(56,189,248,.25);border-radius:6px;padding:3px 9px;font-size:10px;font-weight:700;outline:none">
-              <option value="7">7 Hari Terakhir</option><option value="30">30 Hari</option><option value="999">Semua Data</option>
+            <div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <div class="ct">Tren IPH (Indeks Perkembangan Harga)</div>
+                <span style="font-size:11px;color:#475569;cursor:help" title="IPH adalah indikator perubahan rata-rata harga komoditas di semua pasar dibandingkan periode sebelumnya.">ℹ</span>
+              </div>
+              <div style="font-size:9px;color:#475569;margin-top:1px" id="iphTrendSub">Periode 7 Bulan Terakhir</div>
+            </div>
+            <select id="iphRange" onchange="renderIPHChart()" style="background:#0d1526;color:#38bdf8;border:1px solid rgba(56,189,248,.25);border-radius:6px;padding:3px 9px;font-size:10px;font-weight:700;outline:none;font-family:inherit">
+              <option value="7">7 Hari Terakhir</option>
+              <option value="14">14 Hari Terakhir</option>
+              <option value="30">30 Hari Terakhir</option>
             </select>
           </div>
-          <div class="trend-body"><div class="trend-ylbl">Rupiah (Rp)</div><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
+          <div style="padding:2px 14px 4px;font-size:9px;color:#475569;font-style:italic">ℹ IPH (Indeks Perkembangan Harga) adalah indikator perubahan rata-rata harga komoditas di semua pasar dibandingkan periode sebelumnya.</div>
+          <div style="padding:4px 14px 6px;font-size:9px;color:#475569">%</div>
+          <div style="padding:0 16px 12px"><div style="height:180px"><canvas id="iphTrendChart"></canvas></div></div>
         </div>
-      </div>
-      <!-- ROW 3 -->
-      <div class="r3">
+
+        <!-- DONUT RINGKASAN -->
         <div class="card">
-          <div class="ch"><div class="ct" style="color:#10b981;font-size:10.5px">Komoditas dengan Kenaikan Tertinggi</div><button class="cbadge gn" onclick="gv('komoditas',null)">Lihat Semua</button></div>
-          <div style="padding:12px 14px"><table class="ttbl"><thead><tr><th>No</th><th>Komoditas</th><th>Rata-Rata Harga</th><th>Kenaikan</th></tr></thead><tbody id="topNaikBody"></tbody></table></div>
-        </div>
-        <div class="card">
-          <div class="ch"><div class="ct" style="color:#ef4444;font-size:10.5px">Komoditas dengan Penurunan Tertinggi</div><button class="cbadge rd" onclick="gv('komoditas',null)">Lihat Semua</button></div>
-          <div style="padding:12px 14px"><table class="ttbl"><thead><tr><th>No</th><th>Komoditas</th><th>Rata-Rata Harga</th><th>Penurunan</th></tr></thead><tbody id="topTurunBody"></tbody></table></div>
-        </div>
-        <div class="card">
-          <div class="ch"><div class="ct">Distribusi Perubahan Harga</div></div>
-          <div class="dnut-body">
-            <div class="dnut-wrap"><canvas id="donutChart"></canvas></div>
-            <div class="dleg">
-              <div class="dleg-row"><div class="dleg-l"><div class="dleg-dot" style="background:#10b981"></div><span id="dl-naik">Naik</span></div><div class="dleg-v" id="dl-naik-v" style="color:#10b981">—</div></div>
-              <div class="dleg-row"><div class="dleg-l"><div class="dleg-dot" style="background:#ef4444"></div><span id="dl-turun">Turun</span></div><div class="dleg-v" id="dl-turun-v" style="color:#ef4444">—</div></div>
-              <div class="dleg-row"><div class="dleg-l"><div class="dleg-dot" style="background:#3b82f6"></div><span id="dl-stabil">Stabil</span></div><div class="dleg-v" id="dl-stabil-v" style="color:#3b82f6">—</div></div>
+          <div class="ch"><div class="ct">Ringkasan Perubahan Harga</div></div>
+          <div style="padding:10px 14px">
+            <div style="height:130px"><canvas id="donutChart"></canvas></div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px">
+              <div class="dleg-row"><div class="dleg-l"><div class="dleg-dot" style="background:#10b981"></div><span id="dl-naik" style="font-size:10.5px">Naik</span></div><div class="dleg-v" id="dl-naik-v" style="color:#10b981;font-size:11px">—</div></div>
+              <div class="dleg-row"><div class="dleg-l"><div class="dleg-dot" style="background:#ef4444"></div><span id="dl-turun" style="font-size:10.5px">Turun</span></div><div class="dleg-v" id="dl-turun-v" style="color:#ef4444;font-size:11px">—</div></div>
+              <div class="dleg-row"><div class="dleg-l"><div class="dleg-dot" style="background:#3b82f6"></div><span id="dl-stabil" style="font-size:10.5px">Stabil</span></div><div class="dleg-v" id="dl-stabil-v" style="color:#3b82f6;font-size:11px">—</div></div>
             </div>
+            <div style="font-size:8.5px;color:#374151;margin-top:8px;line-height:1.4;font-style:italic">ℹ IPH dihitung berdasarkan perubahan rata-rata harga komoditas di semua pasar dari periode sebelumnya.</div>
+          </div>
+        </div>
+
+        <!-- TOP NAIK -->
+        <div class="card">
+          <div class="ch" style="padding:10px 14px">
+            <div style="display:flex;align-items:center;gap:5px">
+              <span style="color:#10b981;font-size:12px;font-weight:900">▲</span>
+              <div style="font-size:10px;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:.3px">Komoditas dengan Kenaikan Tertinggi</div>
+            </div>
+            <button class="cbadge gn" onclick="gv('komoditas',null)" style="font-size:8.5px;padding:2px 8px;white-space:nowrap">Lihat Selengkapnya →</button>
+          </div>
+          <div style="padding:4px 14px 10px">
+            <div style="display:grid;grid-template-columns:20px 1fr auto;gap:4px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:#374151;padding:4px 0 6px;border-bottom:1px solid rgba(255,255,255,.04)">
+              <div>No</div><div>Komoditas</div><div style="text-align:right">Perubahan (%)</div>
+            </div>
+            <tbody id="topNaikBody" style="display:table;width:100%;border-collapse:collapse"></tbody>
+          </div>
+        </div>
+
+        <!-- TOP TURUN -->
+        <div class="card">
+          <div class="ch" style="padding:10px 14px">
+            <div style="display:flex;align-items:center;gap:5px">
+              <span style="color:#ef4444;font-size:12px;font-weight:900">▼</span>
+              <div style="font-size:10px;font-weight:800;color:#ef4444;text-transform:uppercase;letter-spacing:.3px">Komoditas dengan Penurunan Tertinggi</div>
+            </div>
+            <button class="cbadge rd" onclick="gv('komoditas',null)" style="font-size:8.5px;padding:2px 8px;white-space:nowrap">Lihat Selengkapnya →</button>
+          </div>
+          <div style="padding:4px 14px 10px">
+            <div style="display:grid;grid-template-columns:20px 1fr auto;gap:4px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:#374151;padding:4px 0 6px;border-bottom:1px solid rgba(255,255,255,.04)">
+              <div>No</div><div>Komoditas</div><div style="text-align:right">Perubahan (%)</div>
+            </div>
+            <tbody id="topTurunBody" style="display:table;width:100%;border-collapse:collapse"></tbody>
           </div>
         </div>
       </div>
-      <!-- PASAR TABLE -->
-      <div class="card">
-        <div class="pt-hdr">
-          <div style="font-size:11.5px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.4px">Ringkasan Harga Per Pasar (Rata-Rata Semua Komoditas)</div>
-          <button class="cbadge bl" onclick="gv('perbandingan',null)">Lihat Semua Pasar</button>
+
+      <!-- ROW 3: Tabel IPH Komoditas | IPH per Pasar | IPH Kabupaten -->
+      <div style="display:grid;grid-template-columns:1fr 280px 200px;gap:10px">
+
+        <!-- TABEL IPH PER KOMODITAS -->
+        <div class="card">
+          <div style="padding:10px 14px;border-bottom:1px solid rgba(99,179,237,.08);display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="ct">Ringkasan IPH per Komoditas (10 Teratas)</div>
+              <span style="font-size:10px;color:#475569;cursor:help" title="Komoditas dengan perubahan harga terbesar hari ini">ℹ</span>
+            </div>
+            <button class="cbadge bl" onclick="gv('komoditas',null)">Lihat Semua Komoditas →</button>
+          </div>
+          <div class="pt-wrap">
+            <table class="pt">
+              <thead><tr>
+                <th style="width:28px">No</th>
+                <th>Komoditas</th>
+                <th>Satuan</th>
+                <th style="text-align:right">Harga Kemarin (Rp)</th>
+                <th style="text-align:right">Harga Hari Ini (Rp)</th>
+                <th style="text-align:right">Perubahan (Rp)</th>
+                <th style="text-align:right">Perubahan (%)</th>
+                <th style="text-align:right">IPH</th>
+                <th>Status</th>
+              </tr></thead>
+              <tbody id="iphKomBody"></tbody>
+            </table>
+          </div>
+          <div style="padding:6px 14px;border-top:1px solid rgba(99,179,237,.05);text-align:center">
+            <button class="cbadge bl" onclick="gv('komoditas',null)">Lihat Semua Komoditas →</button>
+          </div>
         </div>
-        <div class="pt-wrap"><table class="pt"><thead><tr><th>No</th><th>Pasar</th><th>Rata-Rata Harga (Rp)</th><th>Tren</th><th>Perubahan dari Kemarin</th><th>Komoditas Naik</th><th>Komoditas Turun</th><th>Komoditas Stabil</th><th>Total Komoditas</th></tr></thead><tbody id="ptBody"></tbody></table></div>
-        <div class="pt-foot">* Data menampilkan rata-rata dari komoditas yang dipantau di masing-masing pasar</div>
+
+        <!-- IPH PER PASAR -->
+        <div class="card">
+          <div style="padding:10px 14px;border-bottom:1px solid rgba(99,179,237,.08);display:flex;align-items:center;justify-content:space-between">
+            <div class="ct">Ringkasan IPH per Pasar</div>
+            <button class="cbadge bl" onclick="gv('monitoring',null)" style="font-size:8.5px;padding:2px 7px;white-space:nowrap">Lihat Semua Pasar →</button>
+          </div>
+          <div style="padding:4px 0">
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:0;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:#374151;padding:5px 14px 7px;border-bottom:1px solid rgba(99,179,237,.06)">
+              <div>Pasar</div><div style="text-align:right;padding-right:8px">IPH (%)</div><div>Status</div>
+            </div>
+            <div id="iphPasarBody"></div>
+          </div>
+        </div>
+
+        <!-- IPH KABUPATEN -->
+        <div class="card">
+          <div style="padding:10px 14px;border-bottom:1px solid rgba(99,179,237,.08)">
+            <div class="ct">Ringkasan IPH Kabupaten</div>
+          </div>
+          <div style="padding:6px 14px;display:flex;flex-direction:column;gap:0" id="iphKabBody"></div>
+          <div style="padding:6px 14px 12px;text-align:center">
+            <button class="cbadge bl" onclick="gv('tren',null)">Lihat Detail IPH →</button>
+          </div>
+        </div>
       </div>
+
+      <!-- FOOTER -->
+      <div style="display:flex;align-items:center;gap:16px;font-size:9.5px;color:#374151;padding:4px 0;border-top:1px solid rgba(99,179,237,.06)">
+        <span>ℹ Data diperbarui setiap hari pada pukul 08:15 WIB</span>
+        <span>•</span>
+        <span>Sumber: Dinas Perdagangan Kabupaten Banyuwangi</span>
+      </div>
+
     </div>
   </div>
+
 
   <!-- ══ VIEW MONITORING PASAR ══ -->
   <div id="view-monitoring" class="view">
@@ -1550,16 +1712,21 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxbIkJwovu3uzd
 
 // ── AUTO FETCH DARI GOOGLE SHEETS ──
 async function fetchFromSheets() {
-  if (!APPS_SCRIPT_URL) return false; // Skip jika URL belum diisi
+  if (!APPS_SCRIPT_URL) return false;
 
   showLoadingState(true);
   try {
-    const res = await fetch(APPS_SCRIPT_URL + '?action=all', { redirect: 'follow' });
+    // Gunakan fetch biasa - Apps Script sudah support CORS untuk Web App public
+    const res = await fetch(APPS_SCRIPT_URL + '?action=all', {
+      method: 'GET',
+      redirect: 'follow',
+    });
+    
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    
     const json = await res.json();
-
     if (!json.success) throw new Error(json.error || 'Gagal fetch data');
 
-    // Konversi format Apps Script → format DB
     DB = {};
     Object.entries(json.data).forEach(([pasarName, pasarData]) => {
       if (pasarData.error) return;
@@ -1571,12 +1738,40 @@ async function fetchFromSheets() {
       return true;
     }
   } catch (err) {
-    console.warn('Fetch dari Sheets gagal:', err.message);
-    showToast('⚠️ Gagal memuat dari Sheets. Gunakan upload CSV.', true);
+    console.warn('Fetch error:', err.message);
+    // Coba fallback dengan JSONP
+    return fetchWithJsonp();
   } finally {
     showLoadingState(false);
   }
   return false;
+}
+
+function fetchWithJsonp() {
+  return new Promise((resolve) => {
+    const cbName = 'gsCallback_' + Date.now();
+    window[cbName] = function(json) {
+      document.head.removeChild(script);
+      delete window[cbName];
+      if (json.success && Object.keys(json.data||{}).length > 0) {
+        DB = {};
+        Object.entries(json.data).forEach(([p, d]) => { if (!d.error) DB[p] = d; });
+        if (Object.keys(DB).length > 0) { afterLoad(); resolve(true); return; }
+      }
+      showToast('⚠️ Gagal memuat data. Coba refresh kembali.', true);
+      showLoadingState(false);
+      resolve(false);
+    };
+    const script = document.createElement('script');
+    script.src = APPS_SCRIPT_URL + '?action=all&callback=' + cbName;
+    script.onerror = () => {
+      delete window[cbName];
+      showToast('⚠️ Gagal memuat dari Sheets. Cek koneksi internet.', true);
+      showLoadingState(false);
+      resolve(false);
+    };
+    document.head.appendChild(script);
+  });
 }
 
 function showLoadingState(show) {
@@ -1759,52 +1954,277 @@ function parseCSV(content){
 // ── RENDER DASHBOARD ──
 function renderDashboard(){
   const names=Object.keys(DB);if(!names.length)return;
-  let totN=0,totT=0,totS=0,totK=0,allAvg=[],topN=[],topT=[];
-  names.forEach(n=>{const s=DB[n].summary;totN+=s.naik;totT+=s.turun;totS+=s.stabil;totK+=s.total;if(s.avgLast>0)allAvg.push(s.avgLast);topN.push(...s.topNaik);topT.push(...s.topTurun);});
-  // Rata-rata global: hanya pasar yang ada datanya (skip pasar belum input = 0)
-  const gAvg=allAvg.length?Math.round(allAvg.reduce((a,b)=>a+b)/allAvg.length):0;
+  let totN=0,totT=0,totS=0,topN=[],topT=[];
+  const allChangePcts=[];
+  names.forEach(n=>{
+    const s=DB[n].summary;
+    totN+=s.naik;totT+=s.turun;totS+=s.stabil;
+    // Build topNaik/topTurun langsung dari commodities untuk akurasi
+    DB[n].commodities.forEach(c=>{
+      if(c.last>0&&c.prev>0&&Math.abs(c.changePct)>0){
+        if(c.changePct>0)topN.push({name:c.name,last:c.last,prev:c.prev,changePct:c.changePct});
+        else if(c.changePct<0)topT.push({name:c.name,last:c.last,prev:c.prev,changePct:c.changePct});
+      }
+    });
+    DB[n].commodities.forEach(c=>{
+      if(c.last>0&&c.prev>0)allChangePcts.push(c.changePct);
+    });
+  });
   const total=totN+totT+totS;
-  const pct=v=>total?(v/total*100).toFixed(1):'0';
+  const pct=v=>total?(v/total*100).toFixed(1)+'%':'0%';
+  const iph=allChangePcts.length?allChangePcts.reduce((a,b)=>a+b,0)/allChangePcts.length:0;
+  const iphStr=(iph>=0?'+':'')+iph.toFixed(2).replace('.',',')+' %';
+  // Tampilkan di satu baris dengan nowrap
   document.getElementById('s-pasar').textContent=names.length;
-  document.getElementById('s-kom').textContent=DB[names[0]]?.commodities.filter(c=>c.last>0).length||0;
-  document.getElementById('s-avg').textContent='Rp '+gAvg.toLocaleString('id-ID');
-  // avgChange global: rata-rata dari semua pasar yang ada data prev-nya, bukan hanya pasar pertama
-  const allChanges=names.map(n=>DB[n].summary.avgChange).filter((_,i)=>DB[names[i]].summary.avgPrev>0);
-  const ac=allChanges.length?allChanges.reduce((a,b)=>a+b,0)/allChanges.length:0;
-  document.getElementById('s-avg-chg').innerHTML=`<span style="color:${ac>=0?'#34d399':'#f87171'}">${ac>=0?'↑':'↓'} ${Math.abs(ac).toFixed(2).replace('.',',')}% dari kemarin</span>`;
-  document.getElementById('s-naik').textContent=totN;document.getElementById('s-naik-pct').textContent='('+pct(totN)+'%)';document.getElementById('s-naik-sub').textContent='Dari total '+total+' komoditas';
-  document.getElementById('s-turun').textContent=totT;document.getElementById('s-turun-pct').textContent='('+pct(totT)+'%)';document.getElementById('s-turun-sub').textContent='Dari total '+total+' komoditas';
-  document.getElementById('s-stabil').textContent=totS;document.getElementById('s-stabil-pct').textContent='('+pct(totS)+'%)';document.getElementById('s-stabil-sub').textContent='Dari total '+total+' komoditas';
-  document.getElementById('plist-ct').textContent=names.length+' Pasar Pantauan';
-  document.getElementById('pasarList').innerHTML=names.map((n,i)=>`<div class="pl-row"><div class="pl-num">${i+1}</div><div class="pl-name">${n}</div></div>`).join('');
-  renderTrend();renderDonut(totN,totT,totS,pct,total);
+  const refPasar=names.find(n=>n.includes('Blambangan'))||names[0];
+  document.getElementById('s-kom').textContent=DB[refPasar]?.commodities.length||0;
+  document.getElementById('s-naik').textContent=totN;
+  document.getElementById('s-naik-pct').textContent='('+pct(totN)+')';
+  document.getElementById('s-naik-sub').textContent='dari total '+total+' komoditas';
+  document.getElementById('s-turun').textContent=totT;
+  document.getElementById('s-turun-pct').textContent='('+pct(totT)+')';
+  document.getElementById('s-turun-sub').textContent='dari total '+total+' komoditas';
+  document.getElementById('s-stabil').textContent=totS;
+  document.getElementById('s-stabil-pct').textContent='('+pct(totS)+')';
+  document.getElementById('s-stabil-sub').textContent='dari total '+total+' komoditas';
+  const iphEl=document.getElementById('s-iph');
+  const iphBadge=document.getElementById('s-iph-badge');
+  if(iphEl){iphEl.textContent=iphStr;iphEl.style.color=iph>0?'#10b981':iph<0?'#ef4444':'#f1f5f9';}
+  const iphArrow=document.getElementById('s-iph-arrow');
+  if(iphArrow){iphArrow.textContent=iph>0?'▲':iph<0?'▼':'▶';iphArrow.style.color=iph>0?'#10b981':iph<0?'#ef4444':'#f59e0b';}
+  if(iphBadge){
+    if(iph>1){iphBadge.textContent='Inflasi';iphBadge.style.background='rgba(239,68,68,.2)';iphBadge.style.color='#ef4444';}
+    else if(iph>0){iphBadge.textContent='Naik';iphBadge.style.background='rgba(245,158,11,.2)';iphBadge.style.color='#f59e0b';}
+    else if(iph<0){iphBadge.textContent='Turun';iphBadge.style.background='rgba(59,130,246,.2)';iphBadge.style.color='#60a5fa';}
+    else{iphBadge.textContent='Stabil';iphBadge.style.background='rgba(16,185,129,.2)';iphBadge.style.color='#10b981';}
+  }
+  renderIPHSparkline(names);
+  renderDonut(totN,totT,totS,(v)=>total?(v/total*100).toFixed(1):'0',total);
   topN.sort((a,b)=>b.changePct-a.changePct);topT.sort((a,b)=>a.changePct-b.changePct);
-  renderTopTbl('topNaikBody',topN.slice(0,5),'up');renderTopTbl('topTurunBody',topT.slice(0,5),'dn');
-  renderPasarTbl('ptBody',names,5);
+  renderTopNaikTurun('topNaikBody',topN.slice(0,5),'up');
+  renderTopNaikTurun('topTurunBody',topT.slice(0,5),'dn');
+  // Chart perlu delay agar canvas sudah visible
+  setTimeout(()=>{
+    renderIPHChart();
+    renderIPHKomTable(names,topN,topT);
+    renderIPHPasar(names);
+    renderIPHKabupaten(iph,names);
+  },100);
 }
 
-function renderTrend(){
+let iphSparkCI=null;
+function renderIPHSparkline(names){
+  const ctx=document.getElementById('iphSparkline')?.getContext('2d');
+  if(!ctx)return;
+  // Kumpulkan rata-rata harian
+  const dateMap={};
+  const dateOrder=[];
+  const refCom=DB[names[0]]?.commodities?.find(c=>c.dates&&c.dates.length>0);
+  if(refCom)refCom.dates.forEach(d=>{const k=String(d);if(!dateOrder.includes(k))dateOrder.push(k);});
+  names.forEach(n=>{
+    DB[n].commodities.forEach(c=>{
+      if(!c.dates||!c.prices)return;
+      c.dates.forEach((d,i)=>{
+        const key=String(d);const price=c.prices[i];
+        if(price>0){if(!dateMap[key])dateMap[key]=[];dateMap[key].push(price);}
+      });
+    });
+  });
+  const ordered=dateOrder.filter(d=>dateMap[d]).slice(-14);
+  const avgs=ordered.map(d=>{const v=dateMap[d]?.filter(x=>x>0)||[];return v.length?v.reduce((a,b)=>a+b)/v.length:null;});
+  const iphVals=avgs.map((v,i)=>i===0||!avgs[i-1]||!v?0:((v-avgs[i-1])/avgs[i-1]*100));
+  if(iphSparkCI)iphSparkCI.destroy();
+  iphSparkCI=new Chart(ctx,{type:'line',data:{labels:ordered,datasets:[{data:iphVals,borderColor:'#38bdf8',backgroundColor:'rgba(56,189,248,.1)',borderWidth:1.5,tension:.4,fill:true,pointRadius:0,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});
+}
+
+let iphTrendCI=null;
+function renderIPHChart(){
   const names=Object.keys(DB);if(!names.length)return;
-  const range=parseInt(document.getElementById('trendRange').value)||999;
-  const mm={};names.forEach(n=>DB[n].trend.forEach(t=>{if(t.avg>0){if(!mm[t.month])mm[t.month]=[];mm[t.month].push(t.avg);}}));
-  let labels=Object.keys(mm);if(range<999&&labels.length>range)labels=labels.slice(-range);
-  const vals=labels.map(m=>{const valid=mm[m].filter(v=>v>0);return valid.length?Math.round(valid.reduce((a,b)=>a+b)/valid.length):null;});
-  if(trendCI)trendCI.destroy();
-  const ctx=document.getElementById('trendChart').getContext('2d');
-  const grad=ctx.createLinearGradient(0,0,0,200);grad.addColorStop(0,'rgba(59,130,246,.3)');grad.addColorStop(1,'rgba(59,130,246,0)');
-  trendCI=new Chart(ctx,{type:'line',data:{labels,datasets:[{data:vals,borderColor:'#3b82f6',backgroundColor:grad,borderWidth:2.5,tension:.4,fill:true,pointBackgroundColor:'#3b82f6',pointRadius:5,pointHoverRadius:7,pointBorderColor:'#0b0f1e',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a2440',borderColor:'#3b82f6',borderWidth:1,titleColor:'#94a3b8',bodyColor:'#f1f5f9',padding:10,callbacks:{label:c=>'Rp '+c.raw.toLocaleString('id-ID')}}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#475569',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#475569',font:{size:10},callback:v=>'Rp '+(v/1000).toFixed(0)+'k'}}}}});
+  const range=parseInt(document.getElementById('iphRange')?.value||'7');
+
+  // Format tanggal dari Date object atau string
+  function fmtDate(d){
+    if(!d)return'';
+    const dt=new Date(d);
+    if(!isNaN(dt.getTime()))return dt.getDate()+' '+(dt.toLocaleString('id-ID',{month:'short'}));
+    return String(d).split(' ')[0]; // ambil bagian pertama jika string
+  }
+
+  // Kumpulkan rata-rata harian dari semua pasar
+  const dateMap={};
+  const dateOrder=[];
+  // Gunakan dates dari komoditas pertama sebagai referensi urutan
+  const refCom=DB[names[0]]?.commodities?.find(c=>c.dates&&c.dates.length>0);
+  if(refCom){
+    refCom.dates.forEach(d=>{
+      const key=String(d);
+      if(!dateOrder.includes(key))dateOrder.push(key);
+    });
+  }
+
+  names.forEach(n=>{
+    DB[n].commodities.forEach(c=>{
+      if(!c.dates||!c.prices)return;
+      c.dates.forEach((d,i)=>{
+        const key=String(d);
+        const price=c.prices[i];
+        if(price>0){
+          if(!dateMap[key])dateMap[key]=[];
+          dateMap[key].push(price);
+        }
+      });
+    });
+  });
+
+  // Sort berdasarkan urutan asli
+  let orderedDates=dateOrder.filter(d=>dateMap[d]);
+  if(orderedDates.length===0)orderedDates=Object.keys(dateMap);
+  if(orderedDates.length>range)orderedDates=orderedDates.slice(-range);
+
+  const avgs=orderedDates.map(d=>{
+    const v=dateMap[d]?.filter(x=>x>0)||[];
+    return v.length?Math.round(v.reduce((a,b)=>a+b)/v.length):null;
+  });
+
+  const iphVals=avgs.map((v,i)=>{
+    if(i===0||avgs[i-1]===null||v===null)return null;
+    return Math.round(((v-avgs[i-1])/avgs[i-1])*10000)/100;
+  });
+
+  const shortLabels=orderedDates.map(d=>fmtDate(d));
+
+  if(document.getElementById('iphTrendSub'))
+    document.getElementById('iphTrendSub').textContent='Periode '+range+' Hari Terakhir';
+  if(iphTrendCI)iphTrendCI.destroy();
+  const ctx=document.getElementById('iphTrendChart')?.getContext('2d');
+  if(!ctx)return;
+
+  iphTrendCI=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:shortLabels,
+      datasets:[{
+        data:iphVals,
+        borderColor:'#10b981',backgroundColor:'transparent',
+        borderWidth:2,tension:.3,fill:false,
+        pointBackgroundColor:iphVals.map(v=>v===null?'transparent':v>0?'#10b981':v<0?'#ef4444':'#f59e0b'),
+        pointRadius:iphVals.map(v=>v===null?0:4),
+        pointHoverRadius:6,pointBorderColor:'#0b0f1e',pointBorderWidth:1.5,
+        spanGaps:false,
+        segment:{borderColor:ctx=>ctx.p0.parsed.y>=0?'#10b981':'#ef4444'}
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#1a2440',borderColor:'#38bdf8',borderWidth:1,
+          callbacks:{label:c=>c.raw!==null?'IPH: '+(c.raw>=0?'+':'')+c.raw.toFixed(2)+'%':'—'}}
+      },
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#475569',font:{size:9},maxRotation:30,maxTicksLimit:10}},
+        y:{grid:{color:'rgba(255,255,255,.04)'},border:{dash:[3,3]},
+          ticks:{color:'#475569',font:{size:9},callback:v=>(v>=0?'+':'')+v.toFixed(1)+'%'}}
+      }
+    },
+    plugins:[{id:'dl',afterDatasetsDraw(chart){
+      const{ctx,data}=chart;
+      chart.data.datasets.forEach((ds,di)=>{
+        chart.getDatasetMeta(di).data.forEach((pt,i)=>{
+          const val=ds.data[i];
+          if(val===null||val===undefined)return;
+          ctx.save();
+          ctx.font='600 8.5px Segoe UI,sans-serif';
+          ctx.fillStyle=val>0?'#10b981':val<0?'#ef4444':'#f59e0b';
+          ctx.textAlign='center';
+          ctx.fillText((val>=0?'+':'')+val.toFixed(2)+'%',pt.x,pt.y+(val>=0?-10:14));
+          ctx.restore();
+        });
+      });
+    }}]
+  });
 }
 
 function renderDonut(naik,turun,stabil,pct,total){
   if(donutCI)donutCI.destroy();
   const ctx=document.getElementById('donutChart').getContext('2d');
   donutCI=new Chart(ctx,{type:'doughnut',data:{labels:['Naik','Turun','Stabil'],datasets:[{data:[naik,turun,stabil],backgroundColor:['#10b981','#ef4444','#3b82f6'],borderColor:'#111827',borderWidth:4,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a2440',borderColor:'#3b82f6',borderWidth:1,callbacks:{label:c=>c.label+': '+c.raw}}}},plugins:[{id:'ctr',afterDraw(chart){const{ctx,chartArea:{left,right,top,bottom}}=chart;const cx=(left+right)/2,cy=(top+bottom)/2;ctx.save();ctx.font='700 16px Segoe UI,sans-serif';ctx.fillStyle='#f1f5f9';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(total,cx,cy-7);ctx.font='500 9px Segoe UI,sans-serif';ctx.fillStyle='#475569';ctx.fillText('Komoditas',cx,cy+8);ctx.restore();}}]});
-  document.getElementById('dl-naik').textContent='Naik ('+pct(naik)+'%)';document.getElementById('dl-turun').textContent='Turun ('+pct(turun)+'%)';document.getElementById('dl-stabil').textContent='Stabil ('+pct(stabil)+'%)';
-  document.getElementById('dl-naik-v').textContent=naik;document.getElementById('dl-turun-v').textContent=turun;document.getElementById('dl-stabil-v').textContent=stabil;
+  document.getElementById('dl-naik').textContent='Naik ('+pct(naik)+'%)';
+  document.getElementById('dl-turun').textContent='Turun ('+pct(turun)+'%)';
+  document.getElementById('dl-stabil').textContent='Stabil ('+pct(stabil)+'%)';
+  document.getElementById('dl-naik-v').textContent=naik;
+  document.getElementById('dl-turun-v').textContent=turun;
+  document.getElementById('dl-stabil-v').textContent=stabil;
 }
 
-function renderTopTbl(id,items,dir){
-  document.getElementById(id).innerHTML=items.length?items.map((c,i)=>`<tr><td class="trn">${i+1}</td><td class="tcn">${c.name.replace(/ \/ .+/,'').replace(/ \/.+/,'')}</td><td class="tpv">Rp ${c.last.toLocaleString('id-ID')}</td><td class="tpct ${dir}">${dir==='up'?'↑':'↓'} ${Math.abs(c.changePct).toFixed(2).replace('.',',')}%</td></tr>`).join(''):`<tr><td colspan="4" style="color:#374151;padding:20px;text-align:center">Tidak ada data</td></tr>`;
+function renderTopNaikTurun(id,items,dir){
+  document.getElementById(id).innerHTML=items.length
+    ?items.map((c,i)=>`<tr style="border-bottom:1px solid rgba(255,255,255,.03)">
+        <td style="color:#374151;font-size:10px;padding:5px 0;width:18px">${i+1}</td>
+        <td style="font-size:10.5px;font-weight:600;color:#cbd5e1;padding:5px 4px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name.replace(/ \/ .+/,'').replace(/ \/.+/,'')}</td>
+        <td style="text-align:right;font-weight:800;font-size:11px;color:${dir==='up'?'#10b981':'#ef4444'};padding:5px 0;white-space:nowrap">${dir==='up'?'▲':'▼'} ${Math.abs(c.changePct).toFixed(2).replace('.',',')}%</td>
+      </tr>`).join('')
+    :`<tr><td colspan="3" style="color:#374151;padding:14px;text-align:center;font-size:10.5px">Tidak ada data</td></tr>`;
+}
+
+function renderIPHKomTable(names,topN,topT){
+  const komMap={};
+  names.forEach(n=>{
+    DB[n].commodities.forEach(c=>{
+      if(!komMap[c.name]&&c.last>0&&c.prev>0){
+        const namaBase=c.name.split('/')[0].trim();
+        const satuan=c.name.includes('/')?c.name.split('/').pop().trim():'';
+        komMap[c.name]={name:namaBase,satuan,last:c.last,prev:c.prev,change:c.change,changePct:c.changePct};
+      }
+    });
+  });
+  const items=Object.values(komMap).filter(c=>Math.abs(c.changePct)>0).sort((a,b)=>Math.abs(b.changePct)-Math.abs(a.changePct)).slice(0,10);
+  const sL=v=>v>10?'Naik Tinggi':v>0?'Naik':v<-10?'Turun Tinggi':v<0?'Turun':'Stabil';
+  const sC=v=>v>0?'#10b981':v<0?'#ef4444':'#f59e0b';
+  const sB=v=>v>0?'rgba(16,185,129,.15)':v<0?'rgba(239,68,68,.15)':'rgba(245,158,11,.15)';
+  document.getElementById('iphKomBody').innerHTML=items.map((c,i)=>`<tr>
+    <td style="color:#374151;font-weight:700;font-size:10px">${i+1}</td>
+    <td class="pt-name">${c.name}</td>
+    <td style="font-size:10.5px;color:#64748b">${c.satuan}</td>
+    <td style="text-align:right;font-size:10.5px;color:#94a3b8">${c.prev.toLocaleString('id-ID')}</td>
+    <td style="text-align:right;font-size:10.5px;font-weight:700;color:#e2e8f0">${c.last.toLocaleString('id-ID')}</td>
+    <td style="text-align:right;font-size:10.5px;font-weight:700;color:${sC(c.changePct)}">${c.change>=0?'+':''} ${c.change.toLocaleString('id-ID')}</td>
+    <td style="text-align:right;font-size:11px;font-weight:800;color:${sC(c.changePct)}">${c.changePct>=0?'+':''} ${c.changePct.toFixed(2).replace('.',',')}%</td>
+    <td style="text-align:right;font-size:11px;font-weight:800;color:${sC(c.changePct)}">${c.changePct>=0?'+':''} ${c.changePct.toFixed(2).replace('.',',')}%</td>
+    <td><span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px;background:${sB(c.changePct)};color:${sC(c.changePct)};white-space:nowrap">${sL(c.changePct)}</span></td>
+  </tr>`).join('')||`<tr><td colspan="9" style="color:#374151;padding:20px;text-align:center">Tidak ada perubahan harga hari ini</td></tr>`;
+}
+
+function renderIPHPasar(names){
+  const st=v=>v>1?{l:'Inflasi',c:'#ef4444',b:'rgba(239,68,68,.15)'}:v>0?{l:'Waspada',c:'#f59e0b',b:'rgba(245,158,11,.15)'}:v<0?{l:'Deflasi',c:'#3b82f6',b:'rgba(59,130,246,.15)'}:{l:'Stabil',c:'#10b981',b:'rgba(16,185,129,.15)'};
+  document.getElementById('iphPasarBody').innerHTML=names.map((n,i)=>{
+    const iph=DB[n].summary.avgChange||0;const s=st(iph);
+    return`<div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:6px 14px;border-bottom:1px solid rgba(255,255,255,.03)">
+      <div style="font-size:10.5px;font-weight:600;color:#cbd5e1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</div>
+      <div style="font-size:11px;font-weight:800;color:${s.c};padding-right:8px;text-align:right">${iph>=0?'+':''} ${iph.toFixed(2).replace('.',',')}%</div>
+      <span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px;background:${s.b};color:${s.c};min-width:48px;text-align:center">${s.l}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderIPHKabupaten(iphHariIni,names){
+  const mm={};
+  names.forEach(n=>DB[n].trend.forEach(t=>{if(t.avg>0){if(!mm[t.month])mm[t.month]=[];mm[t.month].push(t.avg);}}));
+  const labels=Object.keys(mm);
+  const avgs=labels.map(m=>{const v=mm[m].filter(x=>x>0);return v.length?v.reduce((a,b)=>a+b)/v.length:null;});
+  const cI=(n1,n2)=>{const a=avgs[avgs.length-n1],b=avgs[avgs.length-(n2+1)];return(a&&b)?Math.round(((a-b)/b)*10000)/100:0;};
+  const rows=[
+    {label:'IPH Hari Ini',val:iphHariIni},
+    {label:'IPH Mingguan',val:cI(1,7)},
+    {label:'IPH Bulanan',val:cI(1,30)},
+    {label:'IPH Tahun Kalender',val:cI(1,Math.min(avgs.length-1,12))},
+  ];
+  document.getElementById('iphKabBody').innerHTML=rows.map(r=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+      <div style="font-size:11px;color:#94a3b8">${r.label}</div>
+      <div style="font-size:14px;font-weight:800;color:${r.val>0?'#10b981':r.val<0?'#ef4444':'#f59e0b'}">${r.val>=0?'+':''} ${r.val.toFixed(2).replace('.',',')}%</div>
+    </div>
+  `).join('');
 }
 
 function spark(vals){
@@ -1817,13 +2237,14 @@ function spark(vals){
 function renderPasarTbl(id,names,limit){
   const target=limit?names.slice(0,limit):names;
   document.getElementById(id).innerHTML=target.map((n,i)=>{
-    const s=DB[n].summary;
-    const sv=DB[n].trend.slice(-7).map(t=>t.avg);
+    const s=DB[n].summary;const sv=DB[n].trend.slice(-7).map(t=>t.avg);
     return`<tr><td style="color:#374151;font-weight:700">${i+1}</td><td class="pt-name">${n}</td><td class="hv">${s.avgLast.toLocaleString('id-ID')}</td><td>${spark(sv)}</td><td class="${s.avgChange>=0?'up-p':'dn-p'}">${s.avgChange>=0?'↑':'↓'} ${Math.abs(s.avgChange).toFixed(2).replace('.',',')}%</td><td style="color:#10b981;font-weight:700">${s.naik}</td><td style="color:#ef4444;font-weight:700">${s.turun}</td><td style="color:#f59e0b;font-weight:700">${s.stabil}</td><td style="color:#64748b">${s.total}</td></tr>`;
   }).join('');
 }
 
-// ── MONITORING PASAR ──
+function renderTrend(){}
+
+
 let monViewMode = 'grid';
 function setMonView(mode){
   monViewMode = mode;
@@ -2295,7 +2716,7 @@ function renderPerbandingan(){
   const total=totN+totT+totS,gAvg=allAvgArr.length?Math.round(allAvgArr.reduce((a,b)=>a+b)/allAvgArr.length):0;
   const pct=v=>total?(v/total*100).toFixed(1):'0';
   document.getElementById('psc-pasar').textContent=names.length;
-  document.getElementById('psc-kom').textContent=DB[names[0]]?.commodities.filter(c=>c.last>0).length||0;
+  document.getElementById('psc-kom').textContent=DB[names[0]]?.commodities.length||0;
   document.getElementById('psc-avg').textContent='Rp '+gAvg.toLocaleString('id-ID');
   const ac=DB[names[0]]?.summary.avgChange||0;
   document.getElementById('psc-avg-chg').innerHTML=`<span style="color:${ac>=0?'#34d399':'#f87171'}">${ac>=0?'↑':'↓'} ${Math.abs(ac).toFixed(2).replace('.',',')}% dari kemarin</span>`;
@@ -2590,7 +3011,7 @@ function renderTrenView(){
   const total=totN+totT+totS,gAvg=allAvgArr.length?Math.round(allAvgArr.reduce((a,b)=>a+b)/allAvgArr.length):0;
   const pct=v=>total?(v/total*100).toFixed(1):'0';
   document.getElementById('tsc-pasar').textContent=names.length;
-  document.getElementById('tsc-kom').textContent=DB[names[0]]?.commodities.filter(c=>c.last>0).length||0;
+  document.getElementById('tsc-kom').textContent=DB[names[0]]?.commodities.length||0;
   document.getElementById('tsc-avg').textContent='Rp '+gAvg.toLocaleString('id-ID');
   const ac=DB[names[0]]?.summary.avgChange||0;
   document.getElementById('tsc-avg-chg').innerHTML=`<span style="color:${ac>=0?'#34d399':'#f87171'}">${ac>=0?'↑':'↓'} ${Math.abs(ac).toFixed(2).replace('.',',')}% dari kemarin</span>`;
@@ -2998,7 +3419,7 @@ function renderPeringatan(){
 
   // Stat cards
   document.getElementById('pw-total').textContent = pwAllAlerts.length;
-  document.getElementById('pw-total-sub').textContent = `dari ${DB[names[0]]?.commodities.filter(c=>c.last>0).length||0} komoditas`;
+  document.getElementById('pw-total-sub').textContent = `dari ${DB[names[0]]?.commodities.length||0} komoditas`;
   document.getElementById('pw-kritis').textContent = kritis.length;
   document.getElementById('pw-tinggi').textContent = tinggi.length;
   document.getElementById('pw-sedang').textContent = sedang.length;
@@ -3243,7 +3664,7 @@ function renderLaporan(){
   if(!names.length) return;
 
   // Stat cards
-  const totalKom = DB[names[0]]?.commodities.filter(c=>c.last>0).length||0;
+  const totalKom = DB[names[0]]?.commodities.length||0;
   const today = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
   document.getElementById('lsc-total').textContent = names.length * 7; // simulasi
   document.getElementById('lsc-total-sub').textContent = `Periode 1 - ${today}`;
@@ -3482,7 +3903,7 @@ const UNDUH_CEPAT = [
 function renderUnduhData(){
   const names=Object.keys(DB);
   if(!names.length)return;
-  const totalKom=DB[names[0]]?.commodities.filter(c=>c.last>0).length||0;
+  const totalKom=DB[names[0]]?.commodities.length||0;
   const allMonths=[...new Set(names.flatMap(n=>DB[n].trend.map(t=>t.month)))];
   document.getElementById('usc-total').textContent=names.length*7+2;
   document.getElementById('usc-kom').textContent=totalKom;
